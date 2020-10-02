@@ -11,7 +11,7 @@
 <body>
 <div id="app">
   <div>
-    <div class="meetup-cover">
+    <div class="meetup-cover" :style="meetup.cover ? `--bg-url: url('${meetup.cover}')` : ''">
       <h1 class="meetup-cover__title">{{ meetup.title }}</h1>
     </div>
 
@@ -30,9 +30,9 @@
                 </div>
                 <div class="meetup-agenda__item-col">{{ agenda.startsAt }} - {{ agenda.endsAt }}</div>
                 <div class="meetup-agenda__item-col">
-                  <h5 class="meetup-agenda__title" v-html="agenda.title"></h5>
+                  <h5 class="meetup-agenda__title">{{ agenda.title }}</h5>
                   <p v-if="agenda.speaker"><span>{{ agenda.speaker }}</span><span class="meetup-agenda__dot"></span><span class="meetup-agenda__lang">{{ agenda.language }}</span></p>
-                  <p>{{ agenda.description }}</p>
+                  <p v-if="agenda.description">{{ agenda.description }}</p>
                 </div>
               </div>
             </template>
@@ -53,7 +53,7 @@
             </li>
             <li>
               <img class="icon info-list__icon" alt="icon" src="/assets/icons/icon-cal-lg.svg" />
-              <time datetime="meetup.ISODate">{{ meetup.localDate }}</time>
+              <time :datetime="meetup.ISODate">{{ meetup.localDate }}</time>
             </li>
           </ul>
         </div>
