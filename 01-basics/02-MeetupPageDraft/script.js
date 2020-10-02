@@ -48,18 +48,37 @@ export const app = new Vue({
   el: '#app',
 
   data: {
-    //
+    cleanMeetup: [],
   },
 
   mounted() {
-    // Требуется получить данные митапа с API
+    this.fetchMeetups();
   },
 
   computed: {
-    //
+    meetup() {
+      let meetupDate = {
+        date: new Date(this.cleanMeetup.date),
+        localDate: new Date(this.cleanMeetup.date).toLocaleString(navigator.language, {
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric',
+        }),
+      };
+      this.cleanMeetup.agenda.map(agenda => {
+        if ( agenda.title === null ) agenda.title = agendaItemTitles[agenda.type];
+        agenda.icon = agendaItemIcons[agenda.type];
+      });
+      return Object.assign(this.cleanMeetup, meetupDate);
+    }
   },
 
   methods: {
+    async fetchMeetups() {
+      let response = await fetch(`${API_URL}/meetups/${MEETUP_ID}`);
+      this.cleanMeetup = await response.json();
+      console.log(this.cleanMeetup)
+    },
     // Получение данных с API предпочтительнее оформить отдельным методом,
     // а не писать прямо в mounted()
   },
