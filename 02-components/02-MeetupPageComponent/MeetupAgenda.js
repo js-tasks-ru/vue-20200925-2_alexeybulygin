@@ -5,7 +5,7 @@ export const MeetupAgenda = {
 
   template: `
     <div class="meetup-agenda">
-      <meetup-agenda-item v-for="item in agenda" :key="item.id" :item="item"></meetup-agenda-item>
+      <meetup-agenda-item v-for="agendaItem in agenda" :key="agendaItem.id" :agendaItem="agendaItem"></meetup-agenda-item>
     </div>`,
 
   components: {
@@ -15,7 +15,6 @@ export const MeetupAgenda = {
   props: {
     agenda: {
       type: Array,
-      required: true,
     },
   },
 

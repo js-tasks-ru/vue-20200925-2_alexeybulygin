@@ -4,7 +4,7 @@ export const MeetupDescription = {
   props: {
     description: {
       type: String,
-      required: true,
+      required: false,
       default: 'Описание события'
     }
   }
