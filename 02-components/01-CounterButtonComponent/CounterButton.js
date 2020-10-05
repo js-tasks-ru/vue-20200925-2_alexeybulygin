@@ -1,6 +1,6 @@
 export const CounterButton = {
   // Шаблон потребуется отредактировать
-  template: '<button type="button" :count="count" @click="increment(count)">{{ count }}</button>',
+  template: '<button type="button" @click="onClick(count)">{{ count }}</button>',
 
   props: {
     count: {
@@ -13,14 +13,14 @@ export const CounterButton = {
 
   model: {
     prop: 'count',
-    event: 'click',
+    event: 'increment',
   },
 
   methods: {
-    increment(count) {
+    onClick(count) {
       let newValue = count;
       newValue++;
-      this.$emit('click', newValue);
+      this.$emit('increment', newValue);
     }
   },
   // Компонент должен иметь входной параметр
