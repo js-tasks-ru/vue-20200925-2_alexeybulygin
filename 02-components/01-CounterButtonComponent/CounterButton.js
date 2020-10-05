@@ -1,12 +1,12 @@
 export const CounterButton = {
   // Шаблон потребуется отредактировать
-  template: '<button type="button" @click="onClick(count)">{{ count }}</button>',
+  template: '<button type="button" @click="onClick(count)">{{ count ? count : 0 }}</button>',
 
   props: {
     count: {
       type: Number,
       default: 0,
-      required: true,
+      required: false,
     },
 
   },

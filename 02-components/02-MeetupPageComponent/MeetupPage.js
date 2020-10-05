@@ -23,10 +23,6 @@ export const MeetupPage = {
   methods: {
     async loadMeetup() {
       this.rawMeetup = await fetchMeetup(MEETUP_ID);
-      let meetupCover = {
-        cover: this.rawMeetup.imageId ? getMeetupCoverLink(this.rawMeetup) : undefined,
-      };
-      Object.assign(this.rawMeetup, meetupCover);
     },
   }
 };

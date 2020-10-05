@@ -1,12 +1,16 @@
 import { API_URL } from './data.js';
 
 export const MeetupCover = {
-  template: `<div class="meetup-cover" :style="cover ? \`--bg-url: url('\${cover}')\` : ''">
+  template: `<div class="meetup-cover" :style="--bg-url: url(\'${cover}\')">
         <h1 class="meetup-cover__title">{{ title }}</h1>
     </div>`,
 
+  data: {
+    imageId: null,
+  },
+
   props: {
-    cover: {
+    imageId: {
       type: String,
     },
     title: {
@@ -15,6 +19,12 @@ export const MeetupCover = {
       default: 'Название митапа'
     },
   },
+
+  computed: {
+    cover() {
+      return `${API_URL}/images/${imageId}`;
+    }
+  }
 
   // Возможно, тут потребуется computed
 };

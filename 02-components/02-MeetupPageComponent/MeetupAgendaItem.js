@@ -5,7 +5,7 @@ export const MeetupAgendaItem = {
 
   template: `<div class="meetup-agenda__item">
       <div class="meetup-agenda__item-col">
-        <img class="icon" alt="icon" :src="{{ agendaIcon ? '/assets/icons/icon-\`${agendaIcon}\`.svg' : '' }}" />
+        <img class="icon" alt="icon" :src="\`${agendaIcon}\`.svg" />
       </div>
       <div class="meetup-agenda__item-col">{{ item.startsAt }} - {{ item.endsAt }}</div>
       <div class="meetup-agenda__item-col">
@@ -21,6 +21,10 @@ export const MeetupAgendaItem = {
       </div>
     </div>`,
 
+  data: {
+    agendaIcon: null,
+  },
+  
   props: {
     item: {
       type: Object,
