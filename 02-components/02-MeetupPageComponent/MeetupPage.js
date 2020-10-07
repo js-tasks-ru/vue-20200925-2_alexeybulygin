@@ -4,7 +4,7 @@ import { MEETUP_ID, fetchMeetup, getMeetupCoverLink } from './data.js';
 export const MeetupPage = {
   name: 'MeetupPage',
 
-  template: `<meetup-view v-if="this.rawMeetup" :meetup="this.rawMeetup"></meetup-view>`,
+  template: `<meetup-view :meetup="this.rawMeetup"></meetup-view>`,
 
   components: {
     MeetupView,
