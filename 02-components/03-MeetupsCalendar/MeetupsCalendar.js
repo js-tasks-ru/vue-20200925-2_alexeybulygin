@@ -9,28 +9,108 @@ export const MeetupsCalendar = {
     <div class="rangepicker__calendar">
       <div class="rangepicker__month-indicator">
         <div class="rangepicker__selector-controls">
-          <button class="rangepicker__selector-control-left"></button>
-          <div>Июнь 2020</div>
-          <button class="rangepicker__selector-control-right"></button>
+          <button class="rangepicker__selector-control-left" @click="prevMonth()"></button>
+          <div>{{ title }}</div>
+          <button class="rangepicker__selector-control-right" @click="nextMonth()"></button>
         </div>
       </div>
       <div class="rangepicker__date-grid">
-        <div class="rangepicker__cell rangepicker__cell_inactive">28</div>
-        <div class="rangepicker__cell rangepicker__cell_inactive">29</div>
-        <div class="rangepicker__cell rangepicker__cell_inactive">30</div>
-        <div class="rangepicker__cell rangepicker__cell_inactive">31</div>
-        <div class="rangepicker__cell">
-          1
-          <a class="rangepicker__event">Митап</a>
-          <a class="rangepicker__event">Митап</a>
+        <div v-for="day in days" :class="{'rangepicker__cell_inactive': day.unactive}" class="rangepicker__cell">
+          {{ day.name }}
+          <a v-for="meetup in day.meetups" class="rangepicker__event">{{ meetup.title }}</a>
         </div>
-        <div class="rangepicker__cell">2</div>
-        <div class="rangepicker__cell">3</div>
       </div>
     </div>
   </div>`,
 
-  // Пропсы
+  props: {
+    meetups: {
+      type: Array,
+      required: true,
+    },
+  },
+
+  data: () => {
+    return {
+      month: new Date().getMonth(),
+      year: new Date().getFullYear(),
+    }
+  },
+
+  methods: {
+    prevMonth() {
+      if ( this.month === 0 ) {
+        this.month = 11;
+        this.year -= 1;
+      } else {
+        this.month -= 1;
+      }
+    },
+    nextMonth() {
+      if ( this.month === 11 ) {
+        this.month = 0;
+        this.year += 1;
+      } else {
+        this.month += 1;
+      }
+    },
+  },
+
+  computed: {
+    title() {
+      let month = new Date(this.year, this.month).toLocaleString(navigator.language, {
+        month: 'long',
+      });
+      return `${month} ${this.year}`;
+    },
+
+    days() {
+      let monthArr = [];
+
+      let daysInMonth = new Date(this.year, this.month + 1, 0).getDate();
+      let prevMonthDays = new Date(this.year, this.month, 0).getDate();
+      let monthFirstDay = new Date(this.year, this.month, 0).getDay();
+      let monthLastDay = new Date(this.year, this.month, daysInMonth).getDay();
+
+      // render previous month days
+      if ( monthFirstDay > 0 ) {
+        for ( let i = prevMonthDays - monthFirstDay; i < prevMonthDays; i++ ) {
+          monthArr.push({
+            'name': i + 1,
+            'date': new Date(this.year, this.month, (i + 1)).toISOString().substr(0, 10),
+            'unactive': 'true',
+          });
+        }
+      }
+      // render current month days
+      for ( let i = 0; i < daysInMonth; i++ ) {
+        monthArr.push({
+          'name': i + 1,
+          'date': new Date(this.year, this.month, (i + 1)).toISOString().substr(0, 10),
+          'meetups': [],
+        });
+        this.meetups.map(item => {
+          let innerDate = new Date(item.date).toISOString().substr(0, 10);
+          if ( innerDate === monthArr[i].date ) {
+            monthArr[i - 1]['meetups'].push(item);
+          }
+        });
+      }
+      // render next month days
+      if ( monthLastDay > 0 ) {
+        for ( let i = 0; i < 7 - monthLastDay; i++ ) {
+          monthArr.push({
+            'name': i + 1,
+            'date': new Date(this.year, this.month + 1, (i + 1)).toISOString().substr(0, 10),
+            'unactive': 'true',
+          });
+        }
+      }
+
+      return monthArr;
+    }
+
+  },
 
   // В качестве локального состояния требуется хранить что-то,
   // что позволит определить текущий показывающийся месяц.
