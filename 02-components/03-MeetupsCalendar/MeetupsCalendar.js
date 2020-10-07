@@ -9,9 +9,9 @@ export const MeetupsCalendar = {
     <div class="rangepicker__calendar">
       <div class="rangepicker__month-indicator">
         <div class="rangepicker__selector-controls">
-          <button class="rangepicker__selector-control-left" @click="prevMonth()"></button>
+          <button class="rangepicker__selector-control-left" @click="prevMonth"></button>
           <div>{{ title }}</div>
-          <button class="rangepicker__selector-control-right" @click="nextMonth()"></button>
+          <button class="rangepicker__selector-control-right" @click="nextMonth"></button>
         </div>
       </div>
       <div class="rangepicker__date-grid">
