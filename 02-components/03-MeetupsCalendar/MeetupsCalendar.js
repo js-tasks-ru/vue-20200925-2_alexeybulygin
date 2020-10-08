@@ -70,7 +70,6 @@ export const MeetupsCalendar = {
         for ( let i = prevMonthDays - monthStartsAt + 1; i <= prevMonthDays; i++ ) {
           monthArr.push({
             'name': i,
-            'date': new Date(this.year, this.month, (i + 1)).toISOString().substr(0, 10),
             'unactive': true,
           });
         }
@@ -94,7 +93,6 @@ export const MeetupsCalendar = {
         for ( let i = 1; i <= 7 - monthLastDay; i++ ) {
           monthArr.push({
             'name': i,
-            'date': new Date(this.year, this.month + 1, i).toISOString().substr(0, 10),
             'unactive': true,
           });
         }
