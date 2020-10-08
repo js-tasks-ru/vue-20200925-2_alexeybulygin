@@ -34,7 +34,7 @@ export const MeetupsCalendar = {
     return {
       month: new Date().getMonth(),
       year: new Date().getFullYear(),
-    }
+    };
   },
 
   methods: {
@@ -57,28 +57,21 @@ export const MeetupsCalendar = {
   },
 
   computed: {
-    title() {
-      let month = new Date(this.year, this.month).toLocaleString(navigator.language, {
-        month: 'long',
-      });
-      return `${month} ${this.year}`;
-    },
-
     days() {
       let monthArr = [];
 
       let daysInMonth = new Date(this.year, this.month + 1, 0).getDate();
       let prevMonthDays = new Date(this.year, this.month, 0).getDate();
-      let monthFirstDay = new Date(this.year, this.month, 0).getDay();
+      let monthStartsAt = new Date(this.year, this.month, 0).getDay();
       let monthLastDay = new Date(this.year, this.month, daysInMonth).getDay();
 
       // render previous month days
-      if ( monthFirstDay > 0 ) {
-        for ( let i = prevMonthDays - monthFirstDay; i < prevMonthDays; i++ ) {
+      if ( monthStartsAt > 0 ) {
+        for ( let i = prevMonthDays - monthStartsAt; i < prevMonthDays; i++ ) {
           monthArr.push({
             'name': i + 1,
             'date': new Date(this.year, this.month, (i + 1)).toISOString().substr(0, 10),
-            'unactive': 'true',
+            'unactive': true,
           });
         }
       }
@@ -98,18 +91,24 @@ export const MeetupsCalendar = {
       }
       // render next month days
       if ( monthLastDay > 0 ) {
-        for ( let i = 0; i < 7 - monthLastDay; i++ ) {
+        for ( let i = 1; i <= 7 - monthLastDay; i++ ) {
           monthArr.push({
-            'name': i + 1,
+            'name': i,
             'date': new Date(this.year, this.month + 1, (i + 1)).toISOString().substr(0, 10),
-            'unactive': 'true',
+            'unactive': true,
           });
         }
       }
 
       return monthArr;
-    }
+    },
 
+    title() {
+      let month = new Date(this.year, this.month).toLocaleString(navigator.language, {
+        month: 'long',
+      });
+      return `${month} ${this.year}`;
+    },
   },
 
   // В качестве локального состояния требуется хранить что-то,
