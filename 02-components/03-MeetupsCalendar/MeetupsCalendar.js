@@ -67,34 +67,34 @@ export const MeetupsCalendar = {
 
       // render previous month days
       if ( monthStartsAt > 0 ) {
-        for ( let i = prevMonthDays - monthStartsAt; i < prevMonthDays; i++ ) {
+        for ( let i = prevMonthDays - monthStartsAt + 1; i <= prevMonthDays; i++ ) {
           monthArr.push({
-            'name': i + 1,
+            'name': i,
             'date': new Date(this.year, this.month, (i + 1)).toISOString().substr(0, 10),
             'unactive': true,
           });
         }
       }
       // render current month days
-      for ( let i = 0; i < daysInMonth; i++ ) {
+      for ( let i = 1; i <= daysInMonth; i++ ) {
         monthArr.push({
-          'name': i + 1,
-          'date': new Date(this.year, this.month, (i + 1)).toISOString().substr(0, 10),
+          'name': i,
+          'date': new Date(this.year, this.month, i).toDateString(),
           'meetups': [],
         });
         this.meetups.map(item => {
-          let innerDate = new Date(item.date).toISOString().substr(0, 10);
-          if ( innerDate === monthArr[i].date ) {
-            monthArr[i - 1]['meetups'].push(item);
+          let innerDate = new Date(item.date).toDateString();
+          if ( monthArr.length && innerDate === monthArr[i].date ) {
+            monthArr[i]['meetups'].push(item);
           }
         });
       }
       // render next month days
-      if ( monthLastDay > 0 ) {
+      if ( monthLastDay >= 1 ) {
         for ( let i = 1; i <= 7 - monthLastDay; i++ ) {
           monthArr.push({
             'name': i,
-            'date': new Date(this.year, this.month + 1, (i + 1)).toISOString().substr(0, 10),
+            'date': new Date(this.year, this.month + 1, i).toISOString().substr(0, 10),
             'unactive': true,
           });
         }
