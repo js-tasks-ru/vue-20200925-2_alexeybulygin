@@ -78,14 +78,9 @@ export const MeetupsCalendar = {
       for ( let i = 1; i <= daysInMonth; i++ ) {
         monthArr.push({
           'name': i,
-          'date': new Date(this.year, this.month, i).toDateString(),
-          'meetups': [],
-        });
-        this.meetups.map(item => {
-          let innerDate = new Date(item.date).toDateString();
-          if ( monthArr.length && innerDate === monthArr[i].date ) {
-            monthArr[i]['meetups'].push(item);
-          }
+          'meetups': this.meetups.filter(item => {
+            return new Date(item.date).toDateString() === new Date(this.year, this.month, i).toDateString();
+          }),
         });
       }
       // render next month days
