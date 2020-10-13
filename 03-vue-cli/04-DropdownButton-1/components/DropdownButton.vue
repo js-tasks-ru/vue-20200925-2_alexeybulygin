@@ -1,5 +1,5 @@
 <template>
-  <div class="dropdown" :class="{'show': isActive}" @click="expand">
+  <div class="dropdown" :class="{'show': isActive}" @click="toggle">
     <button type="button" class="button dropdown__toggle" :class="{'dropdown__toggle_icon': hasIcon}">
       <app-icon v-if="icon" :icon="icon" />
       {{ titleFinal }}
@@ -74,7 +74,7 @@ export default {
   },
 
   methods: {
-    expand() {
+    toggle() {
       this.isActive = !this.isActive;
     },
     setValue(option) {
