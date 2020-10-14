@@ -6,7 +6,7 @@
     </button>
 
     <div class="dropdown__menu" :class="{'show': isActive}">
-      <button class="dropdown__item" :class="{'dropdown__item_icon': hasIcon}" type="button" v-for="option in options" @click="setValue({...option})">
+      <button class="dropdown__item" :class="{'dropdown__item_icon': hasIcon}" type="button" v-for="option in options" @click="setValue(option)">
         <app-icon v-if="option.icon" :icon="option.icon" />
         {{ option.text }}
       </button>
@@ -48,17 +48,9 @@ export default {
   },
 
   computed: {
-    finalValue() {
-      return this.value;
-    },
-    option() {
-      if ( this.value )
-        return this.options.find(item => item.value === this.finalValue);
-      return null;
-    },
     titleFinal() {
-      if ( this.option ) return `${this.title} - ${this.option.text}`;
-      return `${this.title}`;
+      if ( this.value ) return `${this.title} - ${this.options.find(item => item.value === this.value).text}`;
+      return this.title;
     },
     hasIcon() {
       return this.options.some(item => item.icon);
@@ -78,7 +70,6 @@ export default {
       this.isActive = !this.isActive;
     },
     setValue(option) {
-      this.expand;
       this.$emit('change', option.value);
     },
   }

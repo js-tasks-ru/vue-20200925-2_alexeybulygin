@@ -1,8 +1,8 @@
 <template>
   <div class="toasts">
-    <div class="toast" :class="{'toast_success': toast.type === 'success', 'toast_error': toast.type === 'error'}" v-for="toast in toastItems">
-      <app-icon :icon="toast.icon" />
-      <span>{{ toast.text }}</span>
+    <div class="toast" :class="toast.toastClass" v-for="toast in toastItems">
+      <app-icon :icon="toast.toastIcon" />
+      <span>{{ toast.toastText }}</span>
     </div>
   </div>
 </template>
@@ -25,22 +25,22 @@ export default {
 
   methods: {
     error(message) {
-      let toastType = 'error';
+      let toastClass = 'toast_error';
       let toastIcon = 'alert-circle';
-      this.addToast(message, toastType, toastIcon);
+      this.addToast(message, toastClass, toastIcon);
     },
 
     success(message) {
-      let toastType = 'success';
+      let toastClass = 'toast_success';
       let toastIcon = 'check-circle';
-      this.addToast(message, toastType, toastIcon);
+      this.addToast(message, toastClass, toastIcon);
     },
 
-    addToast(message, type, icon) {
+    addToast(toastText, toastClass, toastIcon) {
       this.toastItems.push({
-        'text': message,
-        type,
-        icon,
+        toastText,
+        toastClass,
+        toastIcon,
       });
       setTimeout(() => {
         this.toastItems.shift();
