@@ -11,6 +11,10 @@ export const router = new VueRouter({
   base: '/04-SPA/03-NotFound',
   routes: [
     {
+      path: '*',
+      component: NotFoundPage,
+    },
+    {
       path: '/page-a',
       component: PageA,
     },
